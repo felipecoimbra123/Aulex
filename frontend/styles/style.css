@@ -14,12 +14,17 @@ body{
 .main-cadastro{
     color: white;
     margin: 0 auto;
+    display: flex;
     justify-content: center;
+    align-items: center;
     max-width: 550px;
+    min-height: 100vh;
+    min-height: 100svh;
 }
 
 .form-cadastro{
     border: 2px solid white;
+    width: 100%;
     border-radius: 10px;
     padding: 20px;
 }

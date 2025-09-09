@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #171A4A;
+}
+
+.main-cadastro{
+    color: white;
+    margin: 0 auto;
+    justify-content: center;
+    max-width: 550px;
+}
+
+.form-cadastro{
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+h2{
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 35px;
+    margin: 30px;
+}
+
+.form-div{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    gap: 7px;
+}
+
+.form-div label{
+    font-size: 20px;
+    font-family: 'Lato', sans-serif;
+}
+
+.form-div input{
+    font-size: 20px;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+}

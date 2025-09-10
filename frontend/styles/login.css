@@ -11,7 +11,7 @@ body{
     background-color: #171A4A;
 }
 
-.main-cadastro{
+.main-login{
     color: white;
     margin: 0 auto;
     display: flex;
@@ -22,7 +22,7 @@ body{
     min-height: 100svh;
 }
 
-.form-cadastro{
+.form-login{
     border: 2px solid white;
     width: 100%;
     border-radius: 10px;
@@ -31,6 +31,7 @@ body{
 
 h2{
     font-family: 'Oswald', sans-serif;
+    font-weight: 400;
     text-transform: uppercase;
     text-align: center;
     font-size: 35px;
@@ -55,4 +56,41 @@ h2{
     border: none;
     padding: 10px;
     border-radius: 10px;
+}
+
+.div-button-login{
+    display: flex;
+    justify-content: center;
+}
+
+.button-login{
+    width: 200px;
+    margin: 30px;
+    padding: 10px;
+    border: 1px solid white;
+    font-size: 20px;
+    border-radius: 10px;
+    color: #f5f5f5;
+    background-color: #2F2C79;
+    font-family: "Lato", sans-serif;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &:hover{
+        transition: 0.3s;
+        color: black;
+    }
+
+}
+
+a{
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    margin-top: 30px;
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    border-radius: 10px;
+    font-family: "Lato", sans-serif;
 }

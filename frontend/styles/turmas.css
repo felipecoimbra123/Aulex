@@ -79,6 +79,10 @@ h2 {
     font-size: 13px;
 }
 
+.turma-card:hover{
+    transform: scale(1.02);
+}
+
 @media (max-width: 600px) {
     h2{
         font-size: 22px;

@@ -14,34 +14,14 @@ body{
 header{
     background-color: #2F2C79;
     padding: 25px;
-}
-
-nav{
     display: flex;
-    justify-content: center;
-}
-
-ul{
-    display: flex;
-    gap: 90px;
     align-items: center;
-    list-style-type: none;
     justify-content: center;
 }
 
-a{
-    text-transform: uppercase;
-    text-decoration: none;
-    color: white;
-    font-size: 25px;
-    font-family: "Lato", sans-serif;
-
-    &:hover {
-        color: black;
-        transition: 0.4s;
-    }
+img{
+    width: 200px;
 }
-
 
 .main-login{
     color: white;
@@ -132,11 +112,7 @@ a{
 }
 
 @media (max-width: 760px) {
-    ul{
-        gap: 25px;
-    }
-
-    a{
-        font-size: 20px;
+    .main-login{
+        padding: 0px;
     }
 }

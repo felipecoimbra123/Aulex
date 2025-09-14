@@ -15,6 +15,45 @@ body {
       padding: 0;
 }
 
+ header{
+    background-color: #2F2C79;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+img{
+    width: 200px;
+}
+
+nav{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+ul{
+    display: flex;
+    gap: 90px;
+    align-items: center;
+    list-style-type: none;
+    justify-content: center;
+}
+
+a{
+    text-transform: uppercase;
+    text-decoration: none;
+    color: white;
+    font-size: 30px;
+    font-family: "Lato", sans-serif;
+
+    &:hover {
+        color: black;
+        transition: 0.4s;
+    }
+}
+
 h1 {
       text-align: center;
       color: black;

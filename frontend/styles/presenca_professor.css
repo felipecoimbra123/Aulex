@@ -1,0 +1,101 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #D3D9FF;
+    font-family: "Lato", sans-serif;
+}
+
+
+.teacher-main {
+    max-width: 900px;
+    margin: 30px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: "Oswald", sans-serif;
+    color: #2F2C79;
+}
+
+h2 {
+    margin-bottom: 15px;
+    color: #2F2C79;
+}
+
+.section {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 14px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+thead {
+    background-color: #171A4A;
+    color: white;
+}
+
+tbody tr {
+    background-color: #2F2C79;
+    color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #3B3A90; /* leve variação para listras */
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+td input[type="checkbox"] {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+td input[type="checkbox"]:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+td.faltas {
+    color: #FFB6C1; /* destaque rosa claro */
+    font-weight: bold;
+}
+
+/* Responsividade */
+@media (max-width: 760px) {
+    .teacher-main {
+        padding: 15px;
+    }
+
+    th, td {
+        padding: 6px;
+        font-size: 12px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+}

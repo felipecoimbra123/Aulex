@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #D3D9FF;
+    font-family: "Lato", sans-serif;
+}
+
+.main {
+    max-width: 900px;
+    margin: 30px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.section-form {
+    width: 100%;
+}
+
+/* Formulário */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-title {
+    font-family: "Oswald", sans-serif;
+    color: #2F2C79;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Inputs */
+.input-div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.input-div label {
+    font-weight: 600;
+    color: #171A4A;
+}
+
+.input-div input,
+.input-div select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #2F2C79;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.input-div input:focus,
+.input-div select:focus {
+    border-color: #FFB6C1; /* destaque rosa claro */
+}
+
+/* Botão */
+.button {
+    padding: 12px;
+    background-color: #2F2C79;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #171A4A;
+}
+
+/* Responsividade */
+@media (max-width: 760px) {
+    .main {
+        padding: 15px;
+    }
+
+    .form-title {
+        font-size: 20px;
+    }
+
+    .input-div input,
+    .input-div select {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}

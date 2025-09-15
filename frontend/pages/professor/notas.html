@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postagem de Notas</title>
+    <link rel="stylesheet" href="/frontend/styles/postar-notas.css">
+</head>
+<body>
+
+    <main class="main-postar-notas">
+        <h1>Lançar Notas</h1>
+        
+        <form id="form-notas">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Disciplina</th>
+                        <th>Nota 1</th>
+                        <th>Nota 2</th>
+                        <th>Nota 3</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Matemática</td>
+                        <td><input type="text" required></td>
+                        <td><input type="text" required></td>
+                        <td><input type="text" required></td>
+                    </tr>
+                    </tbody>
+            </table>
+            <button type="submit" class="button-salvar">Salvar Notas</button>
+        </form>
+    </main>
+
+    <script src="/frontend/scripts/postar-notas.js"></script>
+</body>
+</html>

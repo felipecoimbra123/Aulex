@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Turma</title>
+    <link rel="stylesheet" href="/frontend/styles/cadastros_pedagogo.css">
+</head>
+<body>
+    <main class="main">
+        <section class="section-form">
+            <form class="form">
+                <h2 class="form-title">Criar Turma</h2>
+
+                <div class="input-div">
+                    <label for="turno">Turno:</label>
+                    <select name="turno" id="turno">
+                        <option value="manha">Manhã</option>
+                        <option value="tarde">Tarde</option>
+                        <option value="noite">Noite</option>
+                    </select>
+                </div>
+
+                <div class="input-div">
+                    <label for="ano">Ano:</label>
+                    <input
+                        type="text"
+                        name="ano"
+                        id="ano"
+                        placeholder="Ex: 3, 2, 1"
+                    />
+                </div>
+
+                <div class="input-div">
+                    <label for="turma">Turma:</label>
+                    <input
+                        type="text"
+                        name="turma"
+                        id="turma"
+                        placeholder="Ex: A, B, C"
+                    />
+                </div>
+
+                <button type="submit" class="button">Enviar</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

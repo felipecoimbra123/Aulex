@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #D3D9FF;
+    color: #fff;
+  }
+
+  header{
+    background-color: #2F2C79;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+img{
+    width: 200px;
+}
+
+nav{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+ul{
+    display: flex;
+    gap: 90px;
+    align-items: center;
+    list-style-type: none;
+    justify-content: center;
+}
+
+a{
+    text-transform: uppercase;
+    text-decoration: none;
+    color: white;
+    font-size: 30px;
+    font-family: "Lato", sans-serif;
+
+    &:hover {
+        color: black;
+        transition: 0.4s;
+    }
+}
+
+.main-presenca{
+    padding: 50px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: black;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #2F2C79;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+thead {
+    background-color: #000020;
+}
+
+thead th {
+    padding: 12px;
+    font-size: 16px;
+    text-align: left;
+}
+
+tbody td {
+    padding: 10px;
+    border-right: 2px solid white;
+    border-bottom: 2px solid white;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.faltas {
+    font-weight: bold;
+    text-align: center;
+    color: #ffcccb;
+}
+
+.div-button-actions{
+    display: flex;
+    gap: 30px;
+}
+
+.button-notas{
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 5px;
+    border: 1px solid white;
+    color: white;
+    background-color: #171A4A;
+    font-family: "Lato", sans-serif;
+    cursor: pointer;
+}
+
+.button-presenca{
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 5px;
+    border: 1px solid white;
+    color: white;
+    background-color: #171A4A;
+    font-family: "Lato", sans-serif;
+    cursor: pointer;
+}
+
+@media (max-width: 760px) {
+    ul{
+        gap: 25px;
+    }
+
+    a{
+        font-size: 20px;
+    }
+}

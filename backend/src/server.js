@@ -93,54 +93,12 @@ app.get('/usuarios/:papel', autenticarToken, (req, res) => {
     );
 });
 
-
-app.put('/usuarios/:id', autenticarToken, async (req, res) => {
-    try {
-        const { nome, email, senha, papel, materia, turma_id } = usuarioSchema.parse(req.body);
-        const hashed = await encryptPassword(senha);
-
-        connection.query(
-            'UPDATE usuarios SET nome=?, email=?, senha=?, papel=? WHERE id=?',
-            [nome, email, hashed, papel, req.params.id],
-            (err) => {
-                if (err) return res.status(500).json({ error: err.message });
-
-                if (papel === 'aluno') {
-                    connection.query(
-                        'UPDATE alunos SET turma_id=? WHERE usuario_id=?',
-                        [turma_id || null, req.params.id],
-                        (err2) => {
-                            if (err2) return res.status(500).json({ error: err2.message });
-                            res.json({ updatedID: req.params.id });
-                        }
-                    );
-                } else if (papel === 'professor') {
-                    connection.query(
-                        'UPDATE professores SET materia=? WHERE usuario_id=?',
-                        [materia || null, req.params.id],
-                        (err2) => {
-                            if (err2) return res.status(500).json({ error: err2.message });
-                            res.json({ updatedID: req.params.id });
-                        }
-                    );
-                } else { // pedagogo
-                    res.json({ updatedID: req.params.id });
-                }
-            }
-        );
-    } catch (e) {
-        res.status(400).json({ error: e.message });
-    }
-});
-
-
 app.delete('/usuarios/:id', autenticarToken, (req, res) => {
     connection.query('DELETE FROM usuarios WHERE id=?', [req.params.id], (err) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json({ deletedID: req.params.id });
     });
 });
-
 
 app.post('/usuario/login', (req, res) => {
     const loginSchema = z.object({

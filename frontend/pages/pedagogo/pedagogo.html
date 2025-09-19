@@ -10,7 +10,7 @@
     <main class="main">
         <section class="section-form">
             <form class="form">
-                <h2 class="form-title">Criar Aluno</h2>
+                <h2 class="form-title">Cadastrar Pedagogo</h2>
 
                 <div class="input-div">
                     <label for="name">Nome:</label>
@@ -29,7 +29,7 @@
                         type="email"
                         name="email"
                         id="email"
-                        placeholder="exemplo@email.com"
+                        placeholder="professor@email.com"
                         required
                     />
                 </div>
@@ -41,24 +41,17 @@
                         name="password"
                         id="password"
                         placeholder="Digite a senha"
+                        minlength="8"
+                        pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}"
+                        title="A senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula e número"
                         required
                     />
-                </div>
-
-                <div class="input-div">
-                    <label for="class">Turma:</label>
-                    <select name="class" id="class" required>
-                        <option value="">Selecione a turma</option>
-                        <option value="1AT">1AT</option>
-                        <option value="2AT">2AT</option>
-                        <option value="3AT">3AT</option>
-                    </select>
                 </div>
 
                 <button class="button" type="submit">Enviar</button>
             </form>
         </section>
     </main>
-    <script src="/frontend/scripts/cadastro_alunos.js"></script>
+    <script src="/frontend/scripts/cadastro_pedagogo.js"></script>
 </body>
 </html>

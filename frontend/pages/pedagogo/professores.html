@@ -3,38 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Turmas</title>
+    <title>Cadastrar Professores</title>
     <link rel="stylesheet" href="/frontend/styles/cadastros_pedagogo.css">
 </head>
-    <body>
+<body>
+    <main class="main">
+        <section class="section-form">
+            <form class="form">
+                <h2 class="form-title">Cadastrar Professores</h2>
 
-        <main class="main">
-            <section class="section-form">
-                <form class="form">
-                    <form class="form">
-                        <h2 class="form-title">Cadastrar Professores</h2>
-                        <div class="input-div">
-                            <label for="name">Nome:</label>
-                            <input
-                                type="text"
-                                name="name"
-                                id="name"
-                                placeholder="Nome"
-                            />
-                        </div>
-                        <div class="input-div">
-                            <label for="class">Matéria:</label>
-                            <input
-                                type="text"
-                                name="name"
-                                id="name"
-                                placeholder="Ex: matemática, física, técnico..."
-                            />
-                        </div>
-                        <button class="button">Enviar</button>
-                    </form>
-                </form>
-            </section>
-        </main>
-    </body>
+                <div class="input-div">
+                    <label for="name">Nome:</label>
+                    <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        placeholder="Nome"
+                        required
+                    />
+                </div>
+
+                <div class="input-div">
+                    <label for="subject">Matéria:</label>
+                    <input
+                        type="text"
+                        name="subject"
+                        id="subject"
+                        placeholder="Ex: Matemática, Física, Técnico..."
+                        required
+                    />
+                </div>
+
+                <div class="input-div">
+                    <label for="email">E-mail:</label>
+                    <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        placeholder="professor@email.com"
+                        required
+                    />
+                </div>
+
+                <div class="input-div">
+                    <label for="password">Senha:</label>
+                    <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        placeholder="Digite a senha"
+                        minlength="8"
+                        pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}"
+                        title="A senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula e número"
+                        required
+                    />
+                </div>
+
+                <button class="button" type="submit">Enviar</button>
+            </form>
+        </section>
+    </main>
+    <script src="/frontend/scripts/cadastro_professor.js"></script>
+</body>
 </html>

@@ -14,7 +14,8 @@
 
                 <div class="input-div">
                     <label for="turno">Turno:</label>
-                    <select name="turno" id="turno">
+                    <select name="turno" id="turno" required>
+                        <option value="">Selecione</option>
                         <option value="manha">Manhã</option>
                         <option value="tarde">Tarde</option>
                         <option value="noite">Noite</option>
@@ -24,10 +25,13 @@
                 <div class="input-div">
                     <label for="ano">Ano:</label>
                     <input
-                        type="text"
+                        type="number"
                         name="ano"
                         id="ano"
-                        placeholder="Ex: 3, 2, 1"
+                        placeholder="Ex: 1, 2, 3"
+                        min="1"
+                        max="9"
+                        required
                     />
                 </div>
 
@@ -38,6 +42,8 @@
                         name="turma"
                         id="turma"
                         placeholder="Ex: A, B, C"
+                        maxlength="2"
+                        required
                     />
                 </div>
 
@@ -45,5 +51,6 @@
             </form>
         </section>
     </main>
+    <script src="/frontend/scripts/cadastro_turma.js"></script>
 </body>
 </html>

@@ -4,7 +4,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node --watch src/server.js"
+<<<<<<< HEAD
   },
+=======
+  },  
+>>>>>>> cab050cd90cc1ff5df891d4a8ebed9d9ee076b46
   "keywords": [],
   "author": "",
   "license": "ISC",

@@ -6,8 +6,8 @@ create table usuarios(
     nome varchar(255) not null,
     email varchar(255) not null unique,
     cpf varchar(11) not null unique,
-    senha varchar(255) not null unique,
-    papel enum('aluno', 'professor', 'pedagogo')
+    senha varchar(255) not null,
+    papel enum('aluno', 'professor', 'pedagogo') not null
 );
 
 create table usuario_has_turma(

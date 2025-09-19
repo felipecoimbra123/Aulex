@@ -1,40 +1,68 @@
-create database aulex;
-use aulex;
+CREATE DATABASE aulex;
+USE aulex;
 
-create table usuarios(
-	id int primary key auto_increment,
-    nome varchar(255) not null,
-    email varchar(255) not null unique,
-    cpf varchar(11) not null unique,
-    senha varchar(255) not null,
-    papel enum('aluno', 'professor', 'pedagogo') not null
+
+CREATE TABLE usuarios (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    papel ENUM('aluno', 'professor', 'pedagogo') NOT NULL
 );
 
-create table usuario_has_turma(
-	id int primary key auto_increment,
-    usuario_id int not null,
-    turma_id int not null,
-    foreign key (usuario_id) references usuarios(id),
-    foreign key (turma_id) references turmas(id)
+
+CREATE TABLE alunos (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    usuario_id INT NOT NULL,
+    turma_id INT,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (turma_id) REFERENCES turmas(id)
 );
 
-create table turmas(
-	id int primary key auto_increment,
-    nome varchar(255) not null,
-    turno varchar(255) not null
+
+CREATE TABLE professores (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    usuario_id INT NOT NULL,
+    materia VARCHAR(100),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
 
-create table presencas(
-	id int primary key auto_increment,
-    status enum('presente', 'falta'),
-	usuario_id int not null,
-    turma_id int not null,
-    foreign key (usuario_id) references usuarios(id),
-    foreign key (turma_id) references turmas(id)
+
+CREATE TABLE pedagogos (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    usuario_id INT NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
 
-create table notas(
-	id int primary key auto_increment,
-	usuario_id int not null,
-    foreign key (usuario_id) references usuarios(id)
+
+CREATE TABLE turmas (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(255) NOT NULL,
+    turno VARCHAR(255) NOT NULL,
+    ano INT NOT NULL
 );
+
+
+CREATE TABLE presencas (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    status ENUM('presente','falta'),
+    usuario_id INT NOT NULL,
+    turma_id INT NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (turma_id) REFERENCES turmas(id)
+);
+
+
+CREATE TABLE notas (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    usuario_id INT NOT NULL,
+    nota DECIMAL(5,2),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+
+
+drop database aulex;
+select * from usuarios;
+select * from alunos;
+select * from professores;
+select * from turmas

@@ -12,52 +12,165 @@ app.use(express.json())
 
 const port = 3000;
 
-app.post('/usuario/login', (req, res) => {
-    const loginUsuarioEsquema = z.object({
-        email: z.string().max(320),
-        senha: z.string().min(5).max(20) 
-    })
 
-    const validacao = loginUsuarioEsquema.safeParse(req.body)
+const usuarioSchema = z.object({
+    nome: z.string().min(2),
+    email: z.string().email(),
+    senha: z.string().min(8),
+    papel: z.enum(['aluno', 'professor', 'pedagogo']),
+    materia: z.string().optional(),
+    turma_id: z.number().optional(), 
+});
 
-    if(!validacao.success) {
-        console.log(validacao)
-        return res.status(400).json({ success: false, errors: validacao.error.errors })
-    }
+const turmaSchema = z.object({
+    nome: z.string().min(1),
+    turno: z.string().min(3),
+    ano: z.number().int().min(1) // ano obrigatório, inteiro
+});
 
-    const { email, senha } = validacao.data
 
-    const query = 'SELECT * FROM usuarios WHERE email = ?'
-    connection.query(query, [email], async (err, results) => {
-        if (err) {
-            return res.status(500).json({ success: false, message: 'Erro no servidor' })
-        }
 
-        if(results.length === 0) {
-            return res.status(401).json({ success: false, message: 'Usuário ou senha incorretos!' })
-        }
+app.post('/usuarios', async (req, res) => {
+    try {
+        const { nome, email, senha, papel, materia, turma_id } = usuarioSchema.parse(req.body);
+        const hashed = await encryptPassword(senha);
 
-        const usuario = results[0]
+        connection.query(
+            'INSERT INTO usuarios (nome, email, senha, papel) VALUES (?, ?, ?, ?)',
+            [nome, email, hashed, papel],
+            (err, result) => {
+                if (err) return res.status(500).json({ error: err.message });
+                const usuarioId = result.insertId;
 
-        try {
-            const senhaCerta = await comparePassword(senha, usuario.senha)
-
-            if(senhaCerta) {
-                const token = signJwt({ id: usuario.id })
-                if(!token) {
-                    res.status(500).json({ success: false })
+                if (papel === 'aluno') {
+                    connection.query(
+                        'INSERT INTO alunos (usuario_id, turma_id) VALUES (?, ?)',
+                        [usuarioId, turma_id || null],
+                        (err2) => {
+                            if (err2) return res.status(500).json({ error: err2.message });
+                            res.json({ id: usuarioId, nome, email, papel, turma_id });
+                        }
+                    );
+                } else if (papel === 'professor') {
+                    connection.query(
+                        'INSERT INTO professores (usuario_id, materia) VALUES (?, ?)',
+                        [usuarioId, materia || null],
+                        (err2) => {
+                            if (err2) return res.status(500).json({ error: err2.message });
+                            res.json({ id: usuarioId, nome, email, papel, materia });
+                        }
+                    );
+                } else { // pedagogo
+                    connection.query(
+                        'INSERT INTO pedagogos (usuario_id) VALUES (?)',
+                        [usuarioId],
+                        (err2) => {
+                            if (err2) return res.status(500).json({ error: err2.message });
+                            res.json({ id: usuarioId, nome, email, papel });
+                        }
+                    );
                 }
+            }
+        );
+    } catch (e) {
+        res.status(400).json({ error: e.message });
+    }
+});
 
-                res.json({ success: true, message: 'Sucesso no login!', data: usuario, token })
 
+app.get('/usuarios/:papel', autenticarToken, (req, res) => {
+    const { papel } = req.params;
+    connection.query(
+        'SELECT u.id, u.nome, u.email, u.papel, a.turma_id, p.materia FROM usuarios u ' +
+        'LEFT JOIN alunos a ON u.id = a.usuario_id ' +
+        'LEFT JOIN professores p ON u.id = p.usuario_id ' +
+        'WHERE u.papel = ?',
+        [papel],
+        (err, rows) => {
+            if (err) return res.status(500).json({ error: err.message });
+            res.json(rows);
+        }
+    );
+});
+
+
+app.put('/usuarios/:id', autenticarToken, async (req, res) => {
+    try {
+        const { nome, email, senha, papel, materia, turma_id } = usuarioSchema.parse(req.body);
+        const hashed = await encryptPassword(senha);
+
+        connection.query(
+            'UPDATE usuarios SET nome=?, email=?, senha=?, papel=? WHERE id=?',
+            [nome, email, hashed, papel, req.params.id],
+            (err) => {
+                if (err) return res.status(500).json({ error: err.message });
+
+                if (papel === 'aluno') {
+                    connection.query(
+                        'UPDATE alunos SET turma_id=? WHERE usuario_id=?',
+                        [turma_id || null, req.params.id],
+                        (err2) => {
+                            if (err2) return res.status(500).json({ error: err2.message });
+                            res.json({ updatedID: req.params.id });
+                        }
+                    );
+                } else if (papel === 'professor') {
+                    connection.query(
+                        'UPDATE professores SET materia=? WHERE usuario_id=?',
+                        [materia || null, req.params.id],
+                        (err2) => {
+                            if (err2) return res.status(500).json({ error: err2.message });
+                            res.json({ updatedID: req.params.id });
+                        }
+                    );
+                } else { // pedagogo
+                    res.json({ updatedID: req.params.id });
+                }
+            }
+        );
+    } catch (e) {
+        res.status(400).json({ error: e.message });
+    }
+});
+
+
+app.delete('/usuarios/:id', autenticarToken, (req, res) => {
+    connection.query('DELETE FROM usuarios WHERE id=?', [req.params.id], (err) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json({ deletedID: req.params.id });
+    });
+});
+
+
+app.post('/usuario/login', (req, res) => {
+    const loginSchema = z.object({
+        email: z.string().max(320),
+        senha: z.string().min(5).max(20)
+    });
+
+    const validacao = loginSchema.safeParse(req.body);
+    if(!validacao.success) return res.status(400).json({ success: false, errors: validacao.error.errors });
+
+    const { email, senha } = validacao.data;
+
+    connection.query('SELECT * FROM usuarios WHERE email = ?', [email], async (err, results) => {
+        if (err) return res.status(500).json({ success: false, message: 'Erro no servidor' });
+        if (results.length === 0) return res.status(401).json({ success: false, message: 'Usuário ou senha incorretos!' });
+
+        const usuario = results[0];
+        try {
+            const senhaCerta = await comparePassword(senha, usuario.senha);
+            if(senhaCerta) {
+                const token = signJwt({ id: usuario.id });
+                res.json({ success: true, message: 'Login efetuado!', data: usuario, token });
             } else {
-                res.status(401).json({ success: false, message: 'Usuário ou senha incorretos!' })
+                res.status(401).json({ success: false, message: 'Usuário ou senha incorretos!' });
             }
         } catch (err) {
-            res.status(500).json({ success: false, message: 'Erro ao verificar senha' })
+            res.status(500).json({ success: false, message: 'Erro ao verificar senha' });
         }
-    })
-})
+    });
+});
 
 app.put('/usuario', autenticarToken, (req, res) => {
     const editarUsuarioEsquema = z.object({
@@ -89,3 +202,44 @@ app.put('/usuario', autenticarToken, (req, res) => {
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`)
 })
+
+app.post('/turmas', (req, res) => {
+    try {
+        const { nome, turno, ano } = turmaSchema.parse(req.body); // <-- aqui
+        connection.query('INSERT INTO turmas (nome, turno, ano) VALUES (?, ?, ?)', [nome, turno, ano], (err, result) => {
+            if (err) return res.status(500).json({ error: err.message });
+            res.json({ id: result.insertId, nome, turno, ano });
+        });
+    } catch (e) {
+        res.status(400).json({ error: e.message });
+    }
+});
+
+
+app.get('/turmas', autenticarToken, (req, res) => {
+    connection.query('SELECT * FROM turmas', (err, rows) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(rows);
+    });
+});
+
+app.put('/turmas/:id', autenticarToken, (req, res) => {
+    try {
+        const { nome, turno, ano } = turmaSchema.parse(req.body);
+        connection.query('UPDATE turmas SET nome=?, turno=?, ano=? WHERE id=?', [nome, turno, ano, req.params.id], (err) => {
+            if (err) return res.status(500).json({ error: err.message });
+            res.json({ updatedID: req.params.id });
+        });
+    } catch (e) {
+        res.status(400).json({ error: e.message });
+    }
+});
+
+app.delete('/turmas/:id', autenticarToken, (req, res) => {
+    connection.query('DELETE FROM turmas WHERE id=?', [req.params.id], (err) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json({ deletedID: req.params.id });
+    });
+});
+
+app.listen(port, () => console.log(`Servidor rodando em http://localhost:${port}`));

@@ -1,3 +1,5 @@
+const API_URL = "http://localhost:3000";
+
 const formProfessor = document.querySelector(".form");
 
 formProfessor.addEventListener("submit", async (e) => {

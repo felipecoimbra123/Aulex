@@ -1,3 +1,5 @@
+const API_URL = "http://localhost:3000";
+
 const formTurma = document.querySelector(".form");
 
 formTurma.addEventListener("submit", async (e) => {
@@ -11,7 +13,7 @@ formTurma.addEventListener("submit", async (e) => {
         const res = await fetch(`${API_URL}/turmas`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ turno, ano, turma }),
+            body: JSON.stringify({ turno, ano, nome:turma }),
         });
 
         const data = await res.json();

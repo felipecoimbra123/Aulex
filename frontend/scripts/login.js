@@ -18,9 +18,25 @@ formLogin.addEventListener('submit', async (e) => {
 
     if(result.success) {
         alert('Login bem-sucedido!')
-        localStorage.setItem('usuario', result.token)
-        window.location.href = '/frontend/pages/aluno/index.html'
+
+        localStorage.setItem('token', result.token)
+        localStorage.setItem('papel', result.data.papel)
+
+        switch(result.data.papel) {
+            case 'aluno':
+                window.location.href = '/frontend/pages/aluno/index.html'
+                break
+            case 'professor':
+                window.location.href = '/frontend/pages/professor/index.html'
+                break
+            case 'pedagogo':
+                window.location.href = '/frontend/pages/admin/index.html'
+                break
+            default:
+                alert('Papel não reconhecido!')
+        }
     } else {
         alert('Login não concluído')
     }
+
 })

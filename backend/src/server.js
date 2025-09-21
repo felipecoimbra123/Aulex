@@ -3,7 +3,7 @@ const cors = require('cors')
 const connection = require('./lib/db_config')
 const app = express()
 const { encryptPassword, comparePassword } = require('./lib/bcrypt')
-const { z } = require('zod')
+const { z, hash } = require('zod')
 const { signJwt } = require('./lib/token')
 const {autenticarToken} = require('./middlewares/autenticarMiddleware')
 
@@ -130,14 +130,15 @@ app.post('/usuario/login', (req, res) => {
     });
 });
 
-app.put('/usuarios/:id', (req, res) => {
+app.put('/usuarios/:id', async (req, res) => {
     const { id } = req.params;
     const { nome, email, senha } = req.body;
 
     if(!nome || !email || !senha) return res.status(400).json({ error: 'Campos obrigatórios' });
 
+    const hashed = await encryptPassword(senha)
     const query = 'UPDATE usuarios SET nome=?, email=?, senha=? WHERE id=?';
-    connection.query(query, [nome, email, senha, id], (err, result) => {
+    connection.query(query, [nome, email, hashed, id], (err, result) => {
         if(err) return res.status(500).json({ error: err.message });
         res.json({ success: true, message: 'Usuário atualizado com sucesso' });
     });

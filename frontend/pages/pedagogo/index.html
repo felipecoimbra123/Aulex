@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Inicial</title>
-    <link rel="stylesheet" href="/frontend/styles/style.css">
+    <link rel="stylesheet" href="/frontend/styles/listagem.css">
 </head>
 <body>
     <header class="header">
@@ -18,22 +18,32 @@
         </nav>
     </header>
 
-    <main class="main">
-        <section>
-            <h2>Lista de Alunos</h2>
-            <ul id="lista-alunos"></ul>
-        </section>
+    <div class="listas-container">
+        <h2>Lista de Alunos</h2>
+        <table id="tabela-alunos" class="tabela">
+            <thead>
+            <tr><th>Nome</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
 
-        <section>
-            <h2>Lista de Professores</h2>
-            <ul id="lista-professores"></ul>
-        </section>
+        <h2>Lista de Professores</h2>
+        <table id="tabela-professores" class="tabela">
+            <thead>
+            <tr><th>Nome</th><th>Matéria</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
 
-        <section>
-            <h2>Lista de Turmas</h2>
-            <ul id="lista-turmas"></ul>
-        </section>
-    </main>
+        <h2>Lista de Turmas</h2>
+        <table id="tabela-turmas" class="tabela">
+            <thead>
+            <tr><th>Ano</th><th>Turma</th><th>Turno</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
 
     <script src="/frontend/scripts/listar.js"></script>
 </body>

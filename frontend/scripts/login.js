@@ -1,3 +1,5 @@
+const API_URL = "http://localhost:3000";
+
 const formLogin = document.querySelector('.form-login')
 
 formLogin.addEventListener('submit', async (e) => {

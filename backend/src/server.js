@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require('cors')
-const connection = require('.lib/db_config')
+const connection = require('./lib/db_config')
 const app = express()
 const { encryptPassword, comparePassword } = require('./lib/bcrypt')
 const { z } = require('zod')
@@ -78,7 +78,7 @@ app.post('/usuarios', async (req, res) => {
 });
 
 
-app.get('/usuarios/:papel', autenticarToken, (req, res) => {
+app.get('/usuarios/:papel', (req, res) => {
     const { papel } = req.params;
     connection.query(
         'SELECT u.id, u.nome, u.email, u.papel, a.turma_id, p.materia FROM usuarios u ' +
@@ -93,7 +93,7 @@ app.get('/usuarios/:papel', autenticarToken, (req, res) => {
     );
 });
 
-app.delete('/usuarios/:id', autenticarToken, (req, res) => {
+app.delete('/usuarios/:id', (req, res) => {
     connection.query('DELETE FROM usuarios WHERE id=?', [req.params.id], (err) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json({ deletedID: req.params.id });
@@ -130,32 +130,32 @@ app.post('/usuario/login', (req, res) => {
     });
 });
 
-app.put('/usuario', autenticarToken, (req, res) => {
-    const editarUsuarioEsquema = z.object({
-        nome: z.string().max(20, { message: "O nome deve ter no máximo 20 caracteres" }),
-        email: z.email({ message: "Formato de e-mail inválido" }),
-        senha: z.string().min(5, { message: "A senha deve ter no mínimo 5 caracteres" }).max(20, { message: "A senha deve ter no máximo 20 caracteres" }),
-    })
+app.put('/usuarios/:id', (req, res) => {
+    const { id } = req.params;
+    const { nome, email, senha } = req.body;
 
-    const validacao = editarUsuarioEsquema.safeParse(req.body)
+    if(!nome || !email || !senha) return res.status(400).json({ error: 'Campos obrigatórios' });
 
-    if(!validacao.success) {
-        return res.status(400).json({ success: false, error: validacao.error.issues[0].message })
-    }
-
-    const id = req.usuario.id
-    const { nome, email, senha } = validacao.data
-
-    const query = 'UPDATE usuarios SET nome = ?, email = ?, senha = ? WHERE id = ?'
-
+    const query = 'UPDATE usuarios SET nome=?, email=?, senha=? WHERE id=?';
     connection.query(query, [nome, email, senha, id], (err, result) => {
-        if (err) {
-            return res.status(500).json({ success: false, err, message: 'Erro ao editar usuário!' })
-        }
+        if(err) return res.status(500).json({ error: err.message });
+        res.json({ success: true, message: 'Usuário atualizado com sucesso' });
+    });
+});
 
-        res.json({success: true, message: 'Usuário editado com sucesso!', data: result})
-    })
-})
+app.put('/professores/:id', (req, res) => {
+    const { id } = req.params;
+    const { materia } = req.body;
+
+    if (!materia) return res.status(400).json({ error: "Campo 'materia' é obrigatório" });
+
+    const query = 'UPDATE professores SET materia=? WHERE usuario_id=?';
+    connection.query(query, [materia, id], (err, result) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json({ success: true, message: "Matéria atualizada com sucesso" });
+    });
+});
+
 
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`)
@@ -174,14 +174,14 @@ app.post('/turmas', (req, res) => {
 });
 
 
-app.get('/turmas', autenticarToken, (req, res) => {
+app.get('/turmas', (req, res) => {
     connection.query('SELECT * FROM turmas', (err, rows) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json(rows);
     });
 });
 
-app.put('/turmas/:id', autenticarToken, (req, res) => {
+app.put('/turmas/:id', (req, res) => {
     try {
         const { nome, turno, ano } = turmaSchema.parse(req.body);
         connection.query('UPDATE turmas SET nome=?, turno=?, ano=? WHERE id=?', [nome, turno, ano, req.params.id], (err) => {
@@ -193,7 +193,7 @@ app.put('/turmas/:id', autenticarToken, (req, res) => {
     }
 });
 
-app.delete('/turmas/:id', autenticarToken, (req, res) => {
+app.delete('/turmas/:id', (req, res) => {
     connection.query('DELETE FROM turmas WHERE id=?', [req.params.id], (err) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json({ deletedID: req.params.id });

@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #D3D9FF;
+}
+
+/* Header */
+header{
+    background-color: #2F2C79;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+img{
+    width: 200px;
+}
+
+nav{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+ul{
+    display: flex;
+    gap: 90px;
+    align-items: center;
+    list-style-type: none;
+    justify-content: center;
+}
+
+/* Links do header */
+header a {
+    text-transform: uppercase;
+    text-decoration: none;
+    color: white;
+    font-size: 30px;
+    font-family: "Lato", sans-serif;
+}
+
+header a:hover {
+    color: black;
+    transition: 0.4s;
+}
+
+/* Links fora do header (nas tabelas, listas etc.) */
+.listas-container a {
+    color: #2a2570; /* roxo escuro */
+    text-decoration: underline;
+}
+
+.listas-container a:hover {
+    color: #ff6600; /* laranja no hover */
+    transition: 0.4s;
+}
+
+/* Responsividade */
+@media (max-width: 760px) {
+    ul{
+        gap: 25px;
+    }
+
+    header a{
+        font-size: 20px;
+    }
+}
+
+/* Listas e tabelas */
+.listas-container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #e6e6ff; /* azul clarinho */
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif;
+}
+
+.listas-container h2 {
+  margin: 20px 0 10px;
+  color: #2a2570; /* roxo escuro */
+  border-bottom: 2px solid #2a2570;
+  padding-bottom: 5px;
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.tabela th {
+  background: #2a2570;
+  color: #fff;
+  padding: 10px;
+  text-align: left;
+}
+
+.tabela td {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.tabela tr:hover {
+  background: #d8d6f3;
+}

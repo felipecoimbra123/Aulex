@@ -19,4 +19,9 @@ O Aulex é uma plataforma de gestão de aulas, desenvolvida para facilitar a int
   *   bcypt
   *   jsonwebtoken
 * Banco de dados
-  * MySQL    
+  * MySQL
+    
+# Dificuldades
+* Listagem de turmas, notas, matérias e presença dos alunos;
+* Listagem de alunos na tela do professor
+* Relacionamentos entre as tabelas ficaram meio confuso também;

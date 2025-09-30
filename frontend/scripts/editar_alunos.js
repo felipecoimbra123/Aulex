@@ -62,14 +62,14 @@ await fetch(`${API_URL}/alunos/${id}`, {
 }
 
 async function excluir(id) {
-    if(!confirm("Deseja realmente excluir este professor?")) return;
+    if(!confirm("Deseja realmente excluir este aluno?")) return;
     try {
         const res = await fetch(`${API_URL}/usuarios/${id}`, {
             method: "DELETE"
         });
         if (!res.ok) throw new Error("Erro ao excluir");
-        alert("Professor excluído!");
-        carregarProfessores();
+        alert("Aluno excluído!");
+        carregarAlunos();
     } catch (err) {
         alert("Erro: " + err.message);
     }

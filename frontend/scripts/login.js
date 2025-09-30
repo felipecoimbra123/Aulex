@@ -30,7 +30,7 @@ formLogin.addEventListener('submit', async (e) => {
                 window.location.href = '/frontend/pages/professor/index.html'
                 break
             case 'pedagogo':
-                window.location.href = '/frontend/pages/admin/index.html'
+                window.location.href = '/frontend/pages/pedagogo/index.html'
                 break
             default:
                 alert('Papel não reconhecido!')

@@ -12,5 +12,5 @@ O Aulex é uma plataforma de gestão de aulas, desenvolvida para facilitar a int
   *  JavaScript
 * Backend
   *   JavaScript
-   *  CSS
-   *  JavaScript
+     *  CSS
+     *  JavaScript

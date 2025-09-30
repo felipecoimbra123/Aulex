@@ -7,6 +7,6 @@ O Aulex é uma plataforma de gestão de aulas, desenvolvida para facilitar a int
 ## Linguagens utilizadas
 
 * Frontend
-**  HTML
-**  CSS
-**  JavaScript
+  *   HTML
+  *  CSS
+  *  JavaScript
